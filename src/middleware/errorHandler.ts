@@ -9,7 +9,7 @@ const insertErrorRecord = async (errorObj:any) : Promise <IResult<any>> => {
   request.input('errorObj', objError);
   request.input('message', errorObj?.message || "");
   request.input('page', errorObj?.page || "");
-  const result = await request.execute(`spInsertError`);
+  const result = await request.execute(`proc_errorLog`);
   return result
 };
 

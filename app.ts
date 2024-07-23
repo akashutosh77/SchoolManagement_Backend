@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import masterDataRouter from "./src/routes/masterData";
 import {connectDatabase} from "./db"
 import { errorHandlerMiddleware } from "./src/middleware/errorHandler";
+import loginRouter from "./src/routes/login";
 
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 connectDatabase();
 
 app.use(`${baseURL}/getMasterSchoolData`, masterDataRouter);
+app.use(`${baseURL}/getLoginDetails`, loginRouter);
 app.use(errorHandlerMiddleware)
 
 export default app;

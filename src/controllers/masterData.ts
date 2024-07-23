@@ -12,7 +12,7 @@ const getMasterSchoolData = async (
   } catch (error) {
     next({
       error,
-      message: "proc_getMasterSchoolData Failed!!",
+      message: "function getMasterSchoolData Failed!!",
       page: "src/controllers/masterData.ts",
     });
   }
