@@ -8,7 +8,8 @@ const getLoginDetails = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = req.body; // Assuming email and password are passed in the request body
+    const  email = req.query.email;
+    const  password = req.query.password; // Assuming email and password are passed in the request body
     if (!email || !password) {
       return res.status(400).send({ message: "Email and Password are required" });
     }
