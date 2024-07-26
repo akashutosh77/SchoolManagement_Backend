@@ -31,6 +31,7 @@ connectDatabase();
 
 app.use(`${baseURL}/getMasterSchoolData`, masterDataRouter);
 app.use(`${baseURL}/getLoginDetails`, loginRouter);
+app.use(`${baseURL}`, loginRouter);
 app.use(errorHandlerMiddleware)
 
 export default app;

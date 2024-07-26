@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { db } from "../../db";
-import sql from 'mssql';
+import sql from "mssql";
 
 const getLoginDetails = async (
   req: Request,
@@ -8,17 +8,19 @@ const getLoginDetails = async (
   next: NextFunction
 ) => {
   try {
-    const  email = req.query.email;
-    const  password = req.query.password; // Assuming email and password are passed in the request body
+    const email = req.query.email;
+    const password = req.query.password; // Assuming email and password are passed in query param
     if (!email || !password) {
-      return res.status(400).send({ message: "Email and Password are required" });
+      return res
+        .status(400)
+        .send({ message: "Email and Password are required" });
     }
 
-    const result = await db.request()
-      .input('email', sql.NVarChar, email)
-      .input('password', sql.NVarChar, password)
-      .execute('proc_getLoginDetails');
-
+    const result = await db
+      .request()
+      .input("email", sql.NVarChar, email)
+      .input("password", sql.NVarChar, password)
+      .execute("proc_getLoginDetails");
     res.send(result?.recordset || []);
   } catch (error) {
     next({
@@ -29,4 +31,32 @@ const getLoginDetails = async (
   }
 };
 
-export { getLoginDetails };
+const getLoginDetailsByEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const email = req.query.email;// Assuming email is passed in query param
+   
+    if (!email) {
+      return res
+        .status(400)
+        .send({ message: "Email is required" });
+    }
+
+    const result = await db
+      .request()
+      .input("email", sql.NVarChar, email)
+      .execute("proc_getLoginDetailsByEmail");
+    res.send(result?.recordset || []);
+  } catch (error) {
+    next({
+      error,
+      message: "function getLoginDetailsByEmail Failed!!",
+      page: "src/controllers/login.ts",
+    });
+  }
+};
+
+export { getLoginDetails, getLoginDetailsByEmail };
