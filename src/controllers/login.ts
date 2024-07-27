@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+const CryptoJS = require("crypto-js");
 import { db } from "../../db";
 import sql from "mssql";
 
@@ -9,19 +10,21 @@ const getLoginDetails = async (
 ) => {
   try {
     const email = req.query.email;
-    const password = req.query.password; // Assuming email and password are passed in query param
+    const password = req.query.password // Assuming email and password are passed in query param
     if (!email || !password) {
       return res
         .status(400)
         .send({ message: "Email and Password are required" });
     }
-
-    const result = await db
+    const loginDetailsByEmail = await db
       .request()
       .input("email", sql.NVarChar, email)
-      .input("password", sql.NVarChar, password)
-      .execute("proc_getLoginDetails");
-    res.send(result?.recordset || []);
+      .execute("proc_getLoginDetailsByEmail");
+    if (password === loginDetailsByEmail?.recordset[0]?.password) {
+      return res.send(loginDetailsByEmail?.recordset || []);
+    } else {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
   } catch (error) {
     next({
       error,
@@ -37,12 +40,10 @@ const getLoginDetailsByEmail = async (
   next: NextFunction
 ) => {
   try {
-    const email = req.query.email;// Assuming email is passed in query param
-   
+    const email = req.query.email; // Assuming email is passed in query param
+
     if (!email) {
-      return res
-        .status(400)
-        .send({ message: "Email is required" });
+      return res.status(400).send({ message: "Email is required" });
     }
 
     const result = await db
