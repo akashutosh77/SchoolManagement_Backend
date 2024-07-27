@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-const CryptoJS = require("crypto-js");
 import { db } from "../../db";
 import sql from "mssql";
 
