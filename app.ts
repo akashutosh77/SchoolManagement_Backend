@@ -9,7 +9,7 @@ import loginRouter from "./src/routes/login";
 dotenv.config();
 const app = express();
 const baseURL = process.env.BASE_URL
-//const connectionString = process.env.DB_CONNECTION_STRING as string;
+
 
 
 app.use(express.json());
