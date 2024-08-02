@@ -5,8 +5,8 @@ import {connectDatabase} from "./db"
 import { errorHandlerMiddleware } from "./src/middleware/errorHandler";
 import loginRouter from "./src/routes/login";
 
-
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local';
+dotenv.config({ path: envFile });
 const app = express();
 const baseURL = process.env.BASE_URL
 
