@@ -9,7 +9,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node ./server.ts",
+    "start": "cross-env NODE_ENV=production nodemon -exec 'ts-node' ./server.ts",
     "prod": "cross-env NODE_ENV=production ts-node ./server.ts"
   },
   "keywords": [],
