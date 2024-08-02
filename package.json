@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -exec 'ts-node' ./server.ts",
-    "start prod":"cross-env NODE_ENV=production nodemon -exec 'ts-node' ./server.ts"
+    "prod":"cross-env NODE_ENV=production nodemon -exec 'ts-node' ./server.ts"
   },
   "keywords": [],
   "author": "",
