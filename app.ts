@@ -4,6 +4,7 @@ import masterDataRouter from "./src/routes/masterData";
 import {connectDatabase} from "./db"
 import { errorHandlerMiddleware } from "./src/middleware/errorHandler";
 import loginRouter from "./src/routes/login";
+import attendanceRouter from "./src/routes/attendance/attendance";
 
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local';
 dotenv.config({ path: envFile });
@@ -32,6 +33,7 @@ connectDatabase();
 app.use(`${baseURL}/getMasterSchoolData`, masterDataRouter);
 app.use(`${baseURL}/getLoginDetails`, loginRouter);
 app.use(`${baseURL}`, loginRouter);
+app.use(`${baseURL}`, attendanceRouter);
 app.use(errorHandlerMiddleware)
 
 export default app;
