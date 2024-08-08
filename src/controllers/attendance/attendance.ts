@@ -16,9 +16,8 @@ const getAttendanceDetails = async (
       .request()
       .input("schoolId", sql.Int, schoolId)
       .input("classId", sql.Int, classId)
-      .input("attendanceDate", sql.Date, attendanceDate)
+      .input("attendanceDate", sql.NVarChar(255), attendanceDate)
       .execute("proc_getAttendanceDetails");
-
       return res.send(attendanceDetails?.recordsets || []);
    
   } catch (error) {
