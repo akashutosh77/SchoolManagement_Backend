@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 // Establish database connection
 connectDatabase();
 
-app.use(`${baseURL}/getMasterSchoolData`, masterDataRouter);
+app.use(`${baseURL}/getMasterData`, masterDataRouter);
 app.use(`${baseURL}/getLoginDetails`, loginRouter);
 app.use(`${baseURL}`, loginRouter);
 app.use(`${baseURL}`, attendanceRouter);

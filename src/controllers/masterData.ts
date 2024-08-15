@@ -1,21 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import { db } from "../../db";
+import sql from "mssql";
 
-const getMasterSchoolData = async (
+const getMasterData = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const result = await db.query("EXEC proc_getMasterSchoolData");
+    const schoolId = req.query.schoolId;
+    const result = await db
+      .request()
+      .input("schoolId", sql.Int, schoolId)
+      .execute("proc_getMasterData");
     res.send(result?.recordsets || []);
   } catch (error) {
     next({
       error,
-      message: "function getMasterSchoolData Failed!!",
+      message: "function getMasterData Failed!!",
       page: "src/controllers/masterData.ts",
     });
   }
 };
 
-export { getMasterSchoolData };
+export { getMasterData };
