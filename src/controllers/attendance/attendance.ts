@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import sql from "mssql";
 import { db } from "../../../db";
 import { formatDate } from "../../utils";
+import { emitAttendanceUpdate } from "../../../sockets";
 
 const getAttendanceDetails = async (
   req: Request,
@@ -71,12 +72,13 @@ const insertOrUpdateAttendanceDetails = async (
         record.remarks
       );
     });
+    console.log("the attendance table is", attendanceTable);
     // Execute stored procedure
     await db
       .request()
       .input("attendanceRecords", sql.TVP, attendanceTable)
       .execute("proc_insertOrUpdateAttendanceDetails");
-
+      emitAttendanceUpdate();
     return res
       .status(200)
       .json({ message: "Attendance records inserted/updated successfully." });

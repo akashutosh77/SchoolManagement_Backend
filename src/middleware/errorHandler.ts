@@ -20,7 +20,7 @@ const errorHandlerMiddleware = async (
   next: NextFunction
 ) => {
   // Handle the error
-  console.log("Executing error handling middleware");
+  console.log("Executing error handling middleware :-   ", err.message);
   //insert the error in DB
   const result = await insertErrorRecord(err)
   res.status(500).json({ errorObj: err, result: result });

@@ -24,4 +24,8 @@ async function connectDatabase() {
   }
 }
 
-export {pool as db, connectDatabase}
+
+
+
+
+export {pool as db, connectDatabase, config}
